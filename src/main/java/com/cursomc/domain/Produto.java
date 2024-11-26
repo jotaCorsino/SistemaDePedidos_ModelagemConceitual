@@ -9,39 +9,38 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 
 @Entity
-public class Categoria implements Serializable {
+public class Produto implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer Id;
 	private String Nome;
+	private Double Preco;
 	
-	@ManyToMany(mappedBy = "Categorias")
-	private List<Produto> Produtos = new ArrayList<>();
+	@ManyToMany
+	@JoinTable(name = "Produto_Categoria",
+				joinColumns = @JoinColumn(name = "Produto_Id"),
+				inverseJoinColumns = @JoinColumn(name = "Categoria_Id"))
 	
-	public Categoria() {
+	private List<Categoria> Categorias = new ArrayList<>();
+	
+	public Produto() {
 		
 	}
-	
-	public Categoria(Integer Id, String Nome) {
-		
+
+	public Produto(Integer id, String nome, Double preco) {
 		super();
-		this.Id = Id;
-		this.Nome = Nome;
+		Id = id;
+		Nome = nome;
+		Preco = preco;
 	}
 
-	public List<Produto> getProdutos() {
-		return Produtos;
-	}
-
-	public void setProdutos(List<Produto> produtos) {
-		Produtos = produtos;
-	}
-	
 	public Integer getId() {
 		return Id;
 	}
@@ -58,6 +57,22 @@ public class Categoria implements Serializable {
 		Nome = nome;
 	}
 
+	public Double getPreco() {
+		return Preco;
+	}
+
+	public void setPreco(Double preco) {
+		Preco = preco;
+	}
+
+	public List<Categoria> getCategorias() {
+		return Categorias;
+	}
+
+	public void setCategorias(List<Categoria> categorias) {
+		Categorias = categorias;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(Id);
@@ -71,10 +86,9 @@ public class Categoria implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Categoria other = (Categoria) obj;
+		Produto other = (Produto) obj;
 		return Objects.equals(Id, other.Id);
 	}
-
 	
 	
 	
