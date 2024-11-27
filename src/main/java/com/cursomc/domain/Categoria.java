@@ -5,12 +5,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 
+@JsonPropertyOrder({"id", "nome", "produtos"}) // Ordem dos campos no JSON
+@JsonIdentityInfo( generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
 public class Categoria implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -20,6 +27,7 @@ public class Categoria implements Serializable {
 	private Integer Id;
 	private String Nome;
 	
+	@JsonManagedReference
 	@ManyToMany(mappedBy = "Categorias")
 	private List<Produto> Produtos = new ArrayList<>();
 	
@@ -74,6 +82,8 @@ public class Categoria implements Serializable {
 		Categoria other = (Categoria) obj;
 		return Objects.equals(Id, other.Id);
 	}
+
+
 
 	
 	
