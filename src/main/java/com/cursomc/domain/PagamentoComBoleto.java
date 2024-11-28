@@ -3,6 +3,7 @@ package com.cursomc.domain;
 import java.util.Date;
 
 import com.cursomc.domain.enums.EstadoPagamento;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Entity;
 
@@ -11,6 +12,7 @@ public class PagamentoComBoleto extends Pagamento {
 	private static final long serialVersionUID = 1L;
 	
 	private Date DataVencimento;
+	
 	private Date DataPagamento;
 	
 	public PagamentoComBoleto() {
@@ -24,6 +26,7 @@ public class PagamentoComBoleto extends Pagamento {
 		DataPagamento = dataPagamento;
 	}
 
+	@JsonFormat(pattern="dd/MM/yyyy")
 	public Date getDataVencimento() {
 		return DataVencimento;
 	}
@@ -32,6 +35,7 @@ public class PagamentoComBoleto extends Pagamento {
 		DataVencimento = dataVencimento;
 	}
 
+	@JsonFormat(pattern="dd/MM/yyyy")
 	public Date getDataPagamento() {
 		return DataPagamento;
 	}

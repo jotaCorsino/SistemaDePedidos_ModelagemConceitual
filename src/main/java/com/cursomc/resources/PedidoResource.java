@@ -7,21 +7,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cursomc.domain.Cliente;
-import com.cursomc.services.ClienteService;
+import com.cursomc.domain.Pedido;
+import com.cursomc.services.PedidoService;
 
 @RestController
-@RequestMapping(value="/clientes")
-public class ClienteResource {
+@RequestMapping(value="/pedidos")
+public class PedidoResource {
 
 	@Autowired
-	private ClienteService service;
+	private PedidoService service;
 	
 	@RequestMapping(value="/{Id}", method=RequestMethod.GET)
 	public ResponseEntity<?> find(@PathVariable Integer Id) {
 		
 
-		Cliente obj = service.find(Id);
+		Pedido obj = service.find(Id);
 		return ResponseEntity.ok().body(obj);
 
 	}

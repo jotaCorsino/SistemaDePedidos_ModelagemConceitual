@@ -8,6 +8,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import com.cursomc.domain.enums.TipoCliente;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -21,7 +22,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 
-@JsonPropertyOrder({"id", "nome", "email", "cpfOuCnpj", "tipo", "enderecos", "telefones"}) // Ordem dos campos no JSON
+@JsonPropertyOrder({"id", "nome", "email", "cpfOuCnpj", "tipo", "enderecos", "telefones", "pedidos"}) // Ordem dos campos no JSON
 @JsonIdentityInfo( generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
 public class Cliente implements Serializable {
@@ -43,6 +44,7 @@ public class Cliente implements Serializable {
 	@CollectionTable(name="TELEFONE")
 	private Set<String> telefones = new HashSet<>();
 	
+	@JsonBackReference
 	@OneToMany(mappedBy="cliente")
 	private List<Pedido> pedidos = new ArrayList<>();
 	
