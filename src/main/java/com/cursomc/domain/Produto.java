@@ -8,6 +8,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.Entity;
@@ -18,6 +19,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 
+@JsonPropertyOrder({"id", "nome", "preco"})
 @JsonIdentityInfo( generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
 public class Produto implements Serializable {

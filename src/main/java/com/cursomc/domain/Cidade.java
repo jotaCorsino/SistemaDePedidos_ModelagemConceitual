@@ -3,6 +3,11 @@ package com.cursomc.domain;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,6 +15,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
+@JsonPropertyOrder({"id", "nome"}) // Ordem dos campos no JSON
+@JsonIdentityInfo( generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
 public class Cidade implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -19,6 +26,7 @@ public class Cidade implements Serializable {
 	private Integer Id;
 	private String Nome;
 	
+	@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name="Estado_Id")
 	private Estado estado;

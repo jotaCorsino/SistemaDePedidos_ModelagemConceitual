@@ -5,12 +5,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 
+@JsonPropertyOrder({"id", "nome"})
+@JsonIdentityInfo( generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
 public class Estado implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -20,6 +28,7 @@ public class Estado implements Serializable {
 	private Integer Id;
 	private String Nome;
 	
+	@JsonBackReference
 	@OneToMany(mappedBy="estado")
 	private List<Cidade> Cidades = new ArrayList<>();
 	
@@ -49,6 +58,7 @@ public class Estado implements Serializable {
 		Nome = nome;
 	}
 
+	@JsonIgnore
 	public List<Cidade> getCidades() {
 		return Cidades;
 	}
