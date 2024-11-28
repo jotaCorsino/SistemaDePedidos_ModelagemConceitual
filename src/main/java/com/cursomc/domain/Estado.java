@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -28,7 +27,7 @@ public class Estado implements Serializable {
 	private Integer Id;
 	private String Nome;
 	
-	@JsonBackReference
+	@JsonIgnore
 	@OneToMany(mappedBy="estado")
 	private List<Cidade> Cidades = new ArrayList<>();
 	
