@@ -2,8 +2,10 @@ package com.cursomc.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -18,6 +20,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 
 @JsonPropertyOrder({"id", "nome", "preco"})
 @JsonIdentityInfo( generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
@@ -35,9 +38,11 @@ public class Produto implements Serializable {
 	@ManyToMany
 	@JoinTable(name = "Produto_Categoria",
 				joinColumns = @JoinColumn(name = "Produto_Id"),
-				inverseJoinColumns = @JoinColumn(name = "Categoria_Id"))
-	
+				inverseJoinColumns = @JoinColumn(name = "Categoria_Id"))	
 	private List<Categoria> Categorias = new ArrayList<>();
+	
+	@OneToMany(mappedBy="id.produto")
+	private Set<ItemPedido> itens = new HashSet<>();
 	
 	public Produto() {
 		
@@ -50,6 +55,15 @@ public class Produto implements Serializable {
 		Preco = preco;
 	}
 
+	public List<Pedido> getPedidos(){
+		List<Pedido> listaPedido = new ArrayList<>();
+		
+		for(ItemPedido x : itens) {
+			listaPedido.add(x.getPedido());
+		}
+		return listaPedido;
+	}
+	
 	public Integer getId() {
 		return Id;
 	}
@@ -83,6 +97,14 @@ public class Produto implements Serializable {
 		Categorias = categorias;
 	}
 
+	public Set<ItemPedido> getItens() {
+		return itens;
+	}
+
+	public void setItens(Set<ItemPedido> itens) {
+		this.itens = itens;
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(Id);
@@ -99,6 +121,8 @@ public class Produto implements Serializable {
 		Produto other = (Produto) obj;
 		return Objects.equals(Id, other.Id);
 	}
+
+
 	
 	
 	
